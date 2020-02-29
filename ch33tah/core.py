@@ -9,9 +9,7 @@ import os
 from resultsmanager import ResultsManager
 import shutil 
 
-
 np.random.seed(1)
-
 
 class Ch33tah:
 
@@ -46,7 +44,20 @@ class Ch33tah:
         ''' load some models in from a previous run for inference '''
         bucket = self.bucket if bucket is None else bucket
         models = self.resmngr.reload_models(bucket)
-        return models
+        self.models = models
+        return self.models
+
+    def inf3r_with(self, X, y, m=None):
+        ''' get predictions on data. If no model is specified, do it for all. 
+        otherwise only predict with self.models[m]. return y_hat, array '''
+        preds = []
+        if m is not None:
+            if not isinstance(m, list):
+                m = [m]
+        else:
+            m = list(self.models)
+        for m in models:
+            preds.append(m.predict(X))
 
 
 if __name__ == '__main__':
