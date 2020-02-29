@@ -1,0 +1,10 @@
+# dask bs 
+**/dask-worker-space
+**/*.lock
+**/*worker-*
+
+# ignore venv 
+**/venv
+
+# ignore env file
+**/*.env
