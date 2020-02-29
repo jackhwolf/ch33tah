@@ -8,3 +8,8 @@
 
 # ignore env file
 **/*.env
+
+**/*.pem
+**/.ipynb_checkpoints
+**/__pycache__
+**/.vscode
