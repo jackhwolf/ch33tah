@@ -1,5 +1,20 @@
 # ch33tah
-### Cheat at ML, fast
+The fastest way to cheat at machine learning
 
+## inspiration
+For HackIllinois' 2020 open source challenge I wanted to make an open source project of my own that would make 
+machine learning much easier for those who don't code. The idea in my head was someone like a chemist or lab 
+scientist, who has data, tech skill, but maybe not ML or even much programming skill. With a clone of `ch33tah` and
+a valid AWS account, they can have multiple solutions at their fingertips fast.
 
-### license: MIT
+## How it works
+This is, at the core, just one big grid search cross validation algorithm to determine a well-suited model and
+set of hyperparameters. All that the user has to provide are the features, labels, and a name for this test. 
+But, heres the catch for them: I have *fully*
+distributed this algorithm over all possible cores on the host server. That means that not only is every set of hyperparameters 
+being tested at the same time, but so is each fold for each set. This leads to a *fast* system that flies through the model
+and hyperparameter space to give the user the best model they can get. 
+After all models have been trained and evaluated, the top performing models of each category are selected. From there, the a
+
+## License: MIT
+I have included an MIT license. 
