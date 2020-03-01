@@ -35,7 +35,7 @@ class Experiment:
                 names.append(mdl_name)
             futures = wc.gather(futures)
         for mdl_name, mdl_res in zip(names, futures):
-            res[mdl_name] = mdl_res  # mdl.gridsearchcv(self.data)
+            res[mdl_name] = mdl_res 
         return res
 
     def analyze_results(self, res):
