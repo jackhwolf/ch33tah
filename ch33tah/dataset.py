@@ -12,10 +12,9 @@ class splitters:
         mask[idx] = True
         return mask
 
-
 class Dataset:
 
-    def __init__(self, data, label, **kw):
+    def __init__(self, data, label):
         ''' create a new standard dataset 
         @params:
             - data: DataFrame or Ndarray
@@ -54,7 +53,7 @@ class Dataset:
     def get_cv_folds(self, k, **kw):
         ''' get some folds '''
         folds = []
-        for i in range(k):
+        for _ in range(k):
             mask = getattr(self.splitters, kw.get('method', 'random'))(self.x, self.y)
             folds.append(mask.copy())
         return folds
