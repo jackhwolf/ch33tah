@@ -17,30 +17,28 @@ class ResultsManager:
                             aws_secret_access_key=os.environ.get('awssecret'),)
 
     def create_bucket(self, bucket_name):
-        '''
-        create new s3 bucket with (formatted) given name
-        '''
+        ''' create new s3 bucket with (formatted) given name '''
         bucket_name = bucket_name.rstrip('/') + str(int(time.time()))[::2]
-        resp = self.cli.create_bucket(
+        self.cli.create_bucket(
                Bucket=bucket_name
             )
         return bucket_name
 
     def upload_run(self, bucket_name, run_dirname):
-        ''' push the last run to the cloud '''
+        ''' push the last run to s3 '''
         files = os.listdir(run_dirname)
         for f in files:
-            key = f
+            filename = run_dirname + '/' + f
             self.cli.upload_file(
-                Filename=run_dirname + '/' + f,
+                Filename=filename,
                 Bucket=bucket_name,
-                Key=key)
+                Key=f)
         return 1
 
     def get_as_obj(self, bucket, file):
+        ''' download a file as an object, without writing to disk '''
         s3_response_object = self.cli.get_object(Bucket=bucket, Key=file)
-        object_content = s3_response_object['Body'].read()
-        return object_content
+        return s3_response_object['Body'].read()
 
     def iterate_bucket(self, bucket):
         ''' loop through bucket with given bucket_name & yield all keys '''
@@ -53,7 +51,7 @@ class ResultsManager:
                     if key[-1] != '/':
                         yield key
             except:
-                pass
+                yield
 
     def reload_models(self, bucket):
         ''' download and restore the models '''
