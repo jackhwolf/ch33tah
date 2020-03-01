@@ -87,7 +87,7 @@ class Model:
                 break
             yield params
 
-    def get_acc(self, y, y_hat):
+    def get_performance_metric(self, y, y_hat):
         ''' report the accuracy '''
         if self.task == 'classification':
             acc = metrics.accuracy_score(y, y_hat)
@@ -95,15 +95,17 @@ class Model:
             acc = metrics.mean_squared_error(y, y_hat)
         return acc
     
-    def train_and_report(self, params, params_idx, data, fold, fold_idx):
+    def train_and_report(self, params, params_idx, data, fold, fold_idx, v=1):
         ''' distribute the training of one (param, CV fold) pair '''
-        print(params_idx, fold_idx, "START")
+        if v:
+            print(params_idx, fold_idx, "START")
         mdl = self.mdl(**params)
         trainx, trainy, testx, testy = data.tr_te_xy(fold)
         mdl.fit(trainx, trainy)
         y_hat = mdl.predict(testx)
-        acc = self.get_acc(testy, y_hat)
-        print(params_idx, fold_idx, "END")
+        acc = self.get_performance_metric(testy, y_hat)
+        if v:
+            print(params_idx, fold_idx, "END")
         return params, params_idx, fold_idx, acc, mdl
 
     def gridsearchcv(self, data, **kw):
