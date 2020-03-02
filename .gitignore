@@ -13,7 +13,8 @@
 **/.ipynb_checkpoints
 **/__pycache__
 **/.vscode
-**/Untitled.ipynbi
+**/Untitled.ipynb
+**/Example.ipynb
 
 **/build
 **/*.egg-info
