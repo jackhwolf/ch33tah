@@ -4,10 +4,10 @@ import time
 from datetime import datetime
 import os
 import json
-from model import Model, classification, regression
 from distributed import worker_client
 import copy 
-from dataset import Dataset
+from ch33tah.dataset import Dataset
+from ch33tah.model import Model, classification, regression
 
 tmap = {
     'classification': classification,
