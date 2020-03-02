@@ -6,6 +6,7 @@ import joblib
 
 load_dotenv()
 
+
 class ResultsManager:
 
     def __init__(self):
@@ -18,7 +19,7 @@ class ResultsManager:
 
     def create_bucket(self, bucket_name):
         ''' create new s3 bucket with (formatted) given name '''
-        bucket_name = bucket_name.rstrip('/') + str(int(time.time()))[::2]
+        bucket_name = bucket_name.rstrip('/') + "-" + str(int(time.time()*1000))[-10:]
         self.cli.create_bucket(
                Bucket=bucket_name
             )
@@ -61,6 +62,6 @@ class ResultsManager:
         for model in models:
             with open(tmp, 'wb') as fp:
                 fp.write(self.get_as_obj(bucket, model))
-            m[model] = joblib.load(tmp)
+            m[model.split('.')[0]] = joblib.load(tmp)
         os.remove(tmp)
         return m
